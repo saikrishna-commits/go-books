@@ -90,7 +90,7 @@ func returnSingleBookById(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func deleteBooks(w http.ResponseWriter, r *http.Request) {
+func deleteBookById(w http.ResponseWriter, r *http.Request) {
 	bookId := mux.Vars(r)["id"]
 
 	bookIdInt, _ := strconv.Atoi(bookId)
@@ -148,6 +148,7 @@ func main() {
 	myRouter.HandleFunc("/", homePage)
 	myRouter.HandleFunc("/newBook", createNewBook).Methods("POST")
 	myRouter.HandleFunc("/books", getAllBooks).Methods("GET")
-	myRouter.HandleFunc("/books/{id}", returnSingleBookById)
+	myRouter.HandleFunc("/books/{id}", returnSingleBookById).Methods("GET")
+	myRouter.HandleFunc("/books/{id}", deleteBookById).Methods("DELETE")
 	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }
